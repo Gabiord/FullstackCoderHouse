@@ -40,15 +40,15 @@ export async function administrador(request, response){
 
 export async function loginUser(request, response){
     const {email, password} = request.body;
-    console.log(email)
+
     try {
         const user = await buscarenBD(email)
+        console.log(user)
 
-        if(!user){return response.redirect("/api/sessions/fail-login")}
-        if(!isValidPassword(user, password)){return response.redirect("/api/sessions/fail-login")}
-
+        if(!user){return response.json({message: "Credenciales Incorrectas"})}
+        if(!isValidPassword(user, password)){return response.json({message: "Credenciales Incorrectas"})}
+        
         const accessToken = generateJWToken(user)
-
         response.status(200).json(accessToken)
     
     } catch (error) {

@@ -17,16 +17,15 @@ function SessionPage(){
         password
       }
 
+
       axios({
         method: 'post',
         url: 'http://localhost:8080/api/sessions/login',
         data: login
-      }).then(result => {console.log(result.data)
+      }).then(result => { console.log(result.data)
       window.localStorage.setItem("jwtCookieToken", result.data)
-      })
-
-
-      .catch((error)=>{
+      
+      }).catch((error)=>{
         console.error(error)})
     }
   
@@ -42,11 +41,11 @@ function SessionPage(){
                 <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
                   <form className="space-y-6" onSubmit={handleClickLogin}>
                     <div>
-                      <label onBlur={handleChangeMail} htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
+                      <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
                         Direccion Email
                       </label>
-                      <div className="mt-2">
-                        <input
+                      <div className="mt-2" >
+                        <input onBlur={handleChangeMail}
                           id="email"
                           name="email"
                           type="email"
@@ -59,12 +58,12 @@ function SessionPage(){
         
                     <div>
                       <div className="flex items-center justify-between">
-                        <label onBlur={handleChangePassword} htmlFor="password" className="block text-sm font-medium leading-6 text-gray-900">
+                        <label htmlFor="password" className="block text-sm font-medium leading-6 text-gray-900">
                           Contraseña
                         </label>
                       </div>
                       <div className="mt-2">
-                        <input
+                        <input onBlur={handleChangePassword} 
                           id="password"
                           name="password"
                           type="password"

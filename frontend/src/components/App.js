@@ -20,7 +20,7 @@ function App() {
     async function cargarUsuario(){
       if(!token){
         setCargandoUsuario(false);
-        console.log("aca")
+        console.log("NO TENGO TOKEN")
         return;
       }
       try {
@@ -32,6 +32,7 @@ function App() {
         })
         setUser(usuario)
         setCargandoUsuario(false)
+        console.log(usuario.data)
 
       } catch (error) {
         console.error(error.response.data)
@@ -43,7 +44,7 @@ function App() {
   return (
     <CartContext>
       <BrowserRouter>
-        <NavBar />
+        <NavBar clildren = usuario.data />
         <Main />
       </BrowserRouter>
     </CartContext>

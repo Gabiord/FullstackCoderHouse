@@ -21,7 +21,6 @@ const initializePassport = () => {
                 const datos = new userDTO(jwt_payload)
                 return done(null, datos)
             } catch (error) {
-                console.log(headerExtractor)
                 console.error(error);
                 return done(error);
             }

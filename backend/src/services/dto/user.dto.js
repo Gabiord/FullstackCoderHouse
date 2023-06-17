@@ -1,10 +1,9 @@
-import { createHash } from "../../utils.js";
 
 export default class userDTO {
     constructor(user){
-    this.full_name=`${user.first_name} ${user.last_name}`;
-    this.email= user.email;
-    this.role= user.role;
+    this.full_name=`${user.user.first_name} ${user.user.last_name}`;
+    this.email= user.user.email;
+    this.role= user.user.role;
     }
 }
 
