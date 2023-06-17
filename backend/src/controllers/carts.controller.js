@@ -8,6 +8,8 @@ export async function finalizarCompra(request, response){
         let cid = request.params.cid;
         let cart = request.body.cart; 
 
+        console.log(cid)
+
 
         let cartDefinitivo = []
         let cartPendiente = []

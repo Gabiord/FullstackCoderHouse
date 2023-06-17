@@ -1,17 +1,21 @@
-import React, { useState } from 'react'
 import { useCart } from '../context/CartContext';
 import ItemList from './ItemList';
 import { Report } from 'notiflix';
 import { useNavigate } from 'react-router-dom';
 import axios from "axios";
+import { useEffect, useState } from "react";
+import { getToken } from "./utils";
+
+
+const apiURL = "http://localhost:8080/api/sessions/current"
+
+const token = getToken()
 
 
 const Carrito = () => {
 
   const lista = "carrito"
   const { cart, setCart } = useCart()
-
-  console.log(cart)
 
   const subtotal = cart.map(item => item.total).reduce((prev, curr) => prev + curr, 0);
   const envio = subtotal > 1000 ? 0 : 300;
@@ -24,24 +28,65 @@ const Carrito = () => {
     navigate(`/tracking/${prop}`)
   }
 
+  const [user, setUser] = useState(null)
+  const [cargandoUusario, setCargandoUsuario] = useState(true);
+
+  useEffect(()=>{
+    async function cargarUsuario(){
+      if(!token){
+        setCargandoUsuario(false);
+        console.log("NO TENGO TOKEN")
+        return;
+      }
+      try {
+        console.log("TENGO TOKEN")
+        const usuario = await axios.get(apiURL, {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        })
+        setUser(usuario.data)
+        setCargandoUsuario(false)
+
+      } catch (error) {
+        console.error(error.response.data)
+      }
+    }
+    cargarUsuario();
+
+  }, [])
+
+  
+
   const handleClickConfirmarCompra = (evt) => {
     if (subtotal > 0) {
       evt.preventDefault();
 
       const code = Date.now()
       const purchase_datetime = new Date(Date.now()).toLocaleString();
-      const purchaser = "gabiord9@gmail.com"
+      const purchaser = user.email
+      const apiPurchase = `http://localhost:8080/api/carts/${user.cart_user_id}/purchase`
+
+      console.log(token)
 
     axios({
         method: 'post',
-        url: 'http://localhost:8080/api/carts/12345679/purchase',
+        url: apiPurchase,
+        headers: {
+          Authorization: `Bearer ${token}`
+        },
         data: {
           code,
           purchase_datetime,
           purchaser,
           cart}
-      });    
+      });   
+      
+    setCart([])
+    
     }
+
+   
 
     else {
       evt.preventDefault()

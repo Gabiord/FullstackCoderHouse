@@ -2,7 +2,7 @@ import { BrowserRouter } from "react-router-dom";
 import CartContext from "../context/CartContext";
 import Main from "./Main";
 import NavBar from "./NavBar"
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { getToken } from "./utils";
 
@@ -43,8 +43,8 @@ function App() {
   return (
     <CartContext>
       <BrowserRouter>
-        <NavBar children={user} />
-        <Main children={user}/>
+        <NavBar/>
+        <Main />
       </BrowserRouter>
     </CartContext>
   );
