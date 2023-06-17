@@ -8,7 +8,8 @@ import SessionPage from "./SessionPage"
 import Chat from "./Chat"
 import Administrador from "./AdministradorProductos";
 
-function Main() {
+function Main(children) {
+
     return (
         <main>
             <Routes>
@@ -19,7 +20,7 @@ function Main() {
                 <Route path="/carrito" element={<Carrito />} />
                 <Route path="/tracking/:id" element={<TrackingPage />} />
                 <Route path="/session" element={<SessionPage/>} />
-                <Route path="/chat" element={<Chat/>} />
+                <Route path="/chat" element={<Chat children= {children}/>} />
                 <Route path="/administrador" element= {<Administrador/>} />
             </Routes>
         </main>

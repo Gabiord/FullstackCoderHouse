@@ -4,6 +4,7 @@ export async function saveNewMessage(request, response){
     try {
         const {body} = request;
         const confirm = await messageModel.create(body);
+        console.log(confirm)
         response.status(200).json(confirm)
     } catch (error) {
         response.status(400).json(error.message)

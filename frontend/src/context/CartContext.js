@@ -41,7 +41,7 @@ const CartContext = ({ children }) => {
                 price: producto.product_price,
                 image: producto.product_thumbnail,
                 quantity: cantidadContador,
-                total: producto.product_thumbnail * cantidadContador,
+                total: producto.product_price * cantidadContador,
             }
 
             const copia = cart.slice(0)

@@ -10,6 +10,9 @@ const Carrito = () => {
 
   const lista = "carrito"
   const { cart, setCart } = useCart()
+
+  console.log(cart)
+
   const subtotal = cart.map(item => item.total).reduce((prev, curr) => prev + curr, 0);
   const envio = subtotal > 1000 ? 0 : 300;
   const impuesto = 0.22 * (subtotal + envio);
@@ -31,7 +34,7 @@ const Carrito = () => {
 
     axios({
         method: 'post',
-        url: 'http://localhost:8080/api/carts/12345678/purchase',
+        url: 'http://localhost:8080/api/carts/12345679/purchase',
         data: {
           code,
           purchase_datetime,

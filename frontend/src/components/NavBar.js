@@ -2,9 +2,10 @@ import { Fragment, useState } from 'react'
 import { Dialog, Popover, Tab, Transition } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 import logo from "../images/logo512.png"
-import { Link } from "react-router-dom"
+import { Link, useLoaderData } from "react-router-dom"
 import CartWidget from './CartWidget'
 import SessionWidget from './SessionWidget'
+import SessionWidgetIniciado from './SessionWitgetIniciado'
 
 const navigation = {
   categories: [
@@ -41,13 +42,14 @@ const navigation = {
   ]
 }
 
+
+
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
-function NavBar() {
+function NavBar(children) {
 
-  
   const [open, setOpen] = useState(false)
 
   return (
@@ -204,7 +206,8 @@ function NavBar() {
               </Popover.Group>
                                         
               <div className="ml-auto flex items-center">
-                <SessionWidget/>
+
+              {children.children == null ? <SessionWidget /> : < SessionWidgetIniciado/> }
 
                 {/* Cart */}
                 <CartWidget />

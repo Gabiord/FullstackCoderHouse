@@ -4,7 +4,7 @@ import Main from "./Main";
 import NavBar from "./NavBar"
 import { useCallback, useEffect, useState } from "react";
 import axios from "axios";
-import { getToken, initAxiosInterceptors } from "./utils";
+import { getToken } from "./utils";
 
 
 const apiURL = "http://localhost:8080/api/sessions/current"
@@ -30,9 +30,8 @@ function App() {
             Authorization: `Bearer ${token}`
           }
         })
-        setUser(usuario)
+        setUser(usuario.data)
         setCargandoUsuario(false)
-        console.log(usuario.data)
 
       } catch (error) {
         console.error(error.response.data)
@@ -44,8 +43,8 @@ function App() {
   return (
     <CartContext>
       <BrowserRouter>
-        <NavBar clildren = usuario.data />
-        <Main />
+        <NavBar children={user} />
+        <Main children={user}/>
       </BrowserRouter>
     </CartContext>
   );

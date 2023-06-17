@@ -41,7 +41,7 @@ const ProductInCart = ({ product }) => {
             </div>
           </div>
           <div class="flex items-center justify-between pt-5">
-            <p class="text-base leading-none text-gray-800 dark:text-white pt-5">Subtotal : ${subtotal}</p>
+            <p class="text-base leading-none text-gray-800 dark:text-black pt-5">Subtotal : ${subtotal}</p>
           </div>
         </div>
       </div>

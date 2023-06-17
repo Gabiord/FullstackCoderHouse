@@ -12,11 +12,10 @@ class ProductServiceMongo {
 
     getProductsById = async(prop) => {
     const product = await productsModel.findById(prop)
-    console.log(product)
     return product
     }
 
-    checkStockById = async (item, quantity, cartDefinitivo) => {
+    checkStockById = async (item, quantity) => {
         const productCurrent = await productsModel.findById(item)
         const stock = productCurrent.product_stock
         
