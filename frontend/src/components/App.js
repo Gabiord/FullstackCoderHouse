@@ -9,7 +9,7 @@ import { getToken, initAxiosInterceptors } from "./utils";
 
 const apiURL = "http://localhost:8080/api/sessions/current"
 
-initAxiosInterceptors();
+const token = getToken()
 
 function App() {
 
@@ -18,15 +18,19 @@ function App() {
 
   useEffect(()=>{
     async function cargarUsuario(){
-      if(!getToken()){
+      if(!token){
         setCargandoUsuario(false);
         console.log("aca")
         return;
       }
       try {
-        const usuario = await axios.get(apiURL)
+        console.log("TENGO TOKEN")
+        const usuario = await axios.get(apiURL, {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        })
         setUser(usuario)
-        console.log(user)
         setCargandoUsuario(false)
 
       } catch (error) {

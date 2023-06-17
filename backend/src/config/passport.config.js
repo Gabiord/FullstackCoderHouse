@@ -3,23 +3,25 @@ import userModel from "../services/db/models/users.js";
 import jwtStrategy from "passport-jwt";
 import GitHubStrategy from "passport-github2";
 import userDTO from "../services/dto/user.dto.js";
+import { request } from "express";
 
 const JwtStrategy = jwtStrategy.Strategy;
-const ExtractJWT = jwtStrategy.ExtractJwt;
+const ExtractorJWT = jwtStrategy.ExtractJwt;
 
 const initializePassport = () => {
 
-    //Estrategia de obtener Token JWT por Cookie:
+    //Estrategia de obtener Token JWT
     passport.use('jwt', new JwtStrategy(
         {
-            jwtFromRequest: ExtractJWT.fromExtractors([cookieExtractor]),
+            jwtFromRequest: ExtractorJWT.fromExtractors([headerExtractor]),
             secretOrKey: process.env.PRIVATE_KEY
         },
         async(jwt_payload, done)=>{
             try {
-                const datos = new userDTO(jwt_payload.user)
+                const datos = new userDTO(jwt_payload)
                 return done(null, datos)
             } catch (error) {
+                console.log(headerExtractor)
                 console.error(error);
                 return done(error);
             }
@@ -69,17 +71,24 @@ const initializePassport = () => {
     })
 }
 
-// funcion para extraer la cookie
-const cookieExtractor = request =>{
+// funcion para extraer el header
+const headerExtractor = request =>{
+
     let token = null;
-    if(request && request.cookies){ 
-       token = request.cookies['jwtCookieToken'];
+    const encabezadoAutorizacion = request.headers.authorization;
+
+    if (encabezadoAutorizacion) {
+        console.log(encabezadoAutorizacion)
+      const partesEncabezado = encabezadoAutorizacion.split(" ");
+      if (partesEncabezado.length === 2 && partesEncabezado[0] === 'Bearer') {
+        token = partesEncabezado[1];
+      }
     }
-
-    
-
+    console.log(token)
     return token;
+
 }
+
 
 export default initializePassport;
 

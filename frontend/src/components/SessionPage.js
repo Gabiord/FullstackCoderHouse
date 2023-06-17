@@ -22,7 +22,7 @@ function SessionPage(){
         url: 'http://localhost:8080/api/sessions/login',
         data: login
       }).then(result => {console.log(result.data)
-      window.localStorage.setItem("jwtCookieToken", JSON.stringify(result.data))
+      window.localStorage.setItem("jwtCookieToken", result.data)
       })
 
 

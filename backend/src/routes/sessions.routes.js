@@ -21,8 +21,7 @@ router.get("/fail-login", sessionsController.renderFailLogin);
 router.get("/githubsession",sessionsController.renderLoginGithub)
 
 router.get("/current", 
-    passportCall('jwt'),
-    authorization("user"),  
+    passportCall('jwt'),  
     sessionsController.sessionCurrent
 )
 
