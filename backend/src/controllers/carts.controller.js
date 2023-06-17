@@ -12,20 +12,24 @@ export async function finalizarCompra(request, response){
         let cartDefinitivo = []
         let cartPendiente = []
 
-        await cart.map(producto => {
+
+        for (const producto of cart){
             let item = producto.id
             let quantity = producto.quantity;
         
-            let check = productService.checkStockById(item, quantity)// me da error al colocar el await. Ver porque?
+            let check = await productService.checkStockById(item, quantity)
 
-            console.log(check)
             if(check){
                 cartDefinitivo.push({item, quantity})
             }
             else{
                 cartPendiente.push({item, quantity})
             }
-        })
+        }
+
+        console.log(cartDefinitivo)
+        console.log("----------------------------")
+        console.log(cartPendiente)
 
         const amountDefinitivo = cartDefinitivo.map(item => item.total).reduce((prev, curr) => prev + curr, 0)
 
@@ -43,8 +47,6 @@ export async function finalizarCompra(request, response){
                 ticket_amount: amountDefinitivo,
                 ticket_purchaser: request.body.purchaser
         }
-
-
 
         response.status(200).json({ticket, cartPendiente})        
     
