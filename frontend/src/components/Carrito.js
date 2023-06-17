@@ -80,6 +80,8 @@ const Carrito = () => {
           purchase_datetime,
           purchaser,
           cart}
+      }).then(result => {
+        console.log(result.data)
       });   
       
     setCart([])

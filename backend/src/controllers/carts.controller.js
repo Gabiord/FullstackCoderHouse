@@ -18,14 +18,15 @@ export async function finalizarCompra(request, response){
         for (const producto of cart){
             let item = producto.id
             let quantity = producto.quantity;
+            let total = producto.total
         
             let check = await productService.checkStockById(item, quantity)
 
             if(check){
-                cartDefinitivo.push({item, quantity})
+                cartDefinitivo.push({item, quantity, total})
             }
             else{
-                cartPendiente.push({item, quantity})
+                cartPendiente.push({item, quantity, total})
             }
         }
 
@@ -36,12 +37,11 @@ export async function finalizarCompra(request, response){
         const amountDefinitivo = cartDefinitivo.map(item => item.total).reduce((prev, curr) => prev + curr, 0)
 
         const newCart = {
-            cart_idUsuario: "6461147dd320e5712d24fdc7",
+            cart_idUsuario: cid,
             cart_products: cartDefinitivo
         }
 
-        const guardarCartenBD= await CartService.createNewCart(newCart)
-
+        await CartService.createNewCart(newCart)
 
         const ticket = {
                 ticket_code: request.body.code,
