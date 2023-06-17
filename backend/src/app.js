@@ -9,6 +9,7 @@ import productRoutes from "./routes/products.routes.js";
 import cartRoutes from "./routes/cart.routes.js";
 import messagesRoutes from "./routes/message.routes.js"
 import sessionRoutes from "./routes/sessions.routes.js"
+import emailRoutes from "./routes/email.routes.js"
 
 
 
@@ -131,4 +132,6 @@ app.use("/api/sessions", sessionRoutes)
 app.use("/api/products", productRoutes);
 app.use("/api/carts", cartRoutes);
 app.use("/api/messages", messagesRoutes);
+app.use("/api/email", emailRoutes);
+// app.use("/api/sms", smsRoutes)
 
