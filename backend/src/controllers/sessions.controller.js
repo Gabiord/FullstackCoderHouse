@@ -45,8 +45,8 @@ export async function loginUser(request, response){
         const user = await buscarenBD(email)
         console.log(user)
 
-        if(!user){return response.json({message: "Credenciales Incorrectas"})}
-        if(!isValidPassword(user, password)){return response.json({message: "Credenciales Incorrectas"})}
+        if(!user){return response.status(400).json({message: "Credenciales Incorrectas"})}
+        if(!isValidPassword(user, password)){return response.status(400).json({message: "Credenciales Incorrectas"})}
         
         const accessToken = generateJWToken(user)
         response.status(200).json(accessToken)
