@@ -1,6 +1,7 @@
 import productsModel from "../services/db/models/products.js"
 import productDTO from "../services/dto/products.dto.js";
 import { productService } from "../services/factory.js";
+import { generateProduct } from "../utils.js";
 
 const persistenceFactory = productService;
 

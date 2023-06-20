@@ -4,6 +4,8 @@ import bcrypt from "bcrypt";
 import jwt from 'jsonwebtoken';
 import passport from 'passport';
 import dotenv from "dotenv";
+import {faker} from "@faker-js/faker"
+import { mongoose } from 'mongoose';
 
 
 const __filename = fileURLToPath(import.meta.url);
@@ -52,5 +54,19 @@ export const authorization = (role) => {
     }
 };
 
+//FAKER
+//Idioma de datos
+faker.locale = 'es';
 
-
+export const generateProduct = () => {
+    return{
+        product_name: faker.commerce.productName(),
+        product_description: faker.commerce.productDescription(),
+        product_price: faker.commerce.price({ min: 100, max: 200, dec: 0 }), // Ver porque devuelve NaN
+        product_category: faker.commerce.productAdjective() ,
+        product_code: faker.random.numeric(10),
+        product_thumbnail: faker.image.image(),
+        product_stock: faker.random.numeric(2) ,
+        product_status: true
+    }
+}

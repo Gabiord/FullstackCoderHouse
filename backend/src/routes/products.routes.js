@@ -1,6 +1,5 @@
 import { Router } from "express";
 import * as ProductController from "../controllers/products.controller.js";
-import { passportCall, authorization} from "../utils.js";
 import cookieParser from 'cookie-parser';
 
 
@@ -16,7 +15,13 @@ router.get("/",
 
 router.get("/:id", ProductController.getProductsById)
 
+
 router.post("/savenewproduct", ProductController.saveNewProduct)
+
+
+
+
+
 
 
 
