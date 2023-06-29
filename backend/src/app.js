@@ -3,14 +3,12 @@ import __dirname from "./utils.js";
 
 const app = Express();
 
-
 //Imports de Rutas
 import productRoutes from "./routes/products.routes.js";
 import cartRoutes from "./routes/cart.routes.js";
 import messagesRoutes from "./routes/message.routes.js"
 import sessionRoutes from "./routes/sessions.routes.js"
 import emailRoutes from "./routes/email.routes.js"
-
 
 
 //Configuracion de Base de datos
@@ -32,16 +30,13 @@ import passport from 'passport';
 import initializePassport from './config/passport.config.js';
 
 
-
-
-
 //importacion de cors 
 import cors from 'cors'; 
 app.use(cors());
 
 
 //Configuracion Servidor
-const PORT = 8080;
+const PORT = process.env.PORT;
 const httpServer = app.listen(PORT, () => {
   console.log(`server run on port ${PORT}`);
 });
@@ -107,11 +102,9 @@ initializePassport();
 app.use(passport.initialize());
 
 
-
 //Configuracion Postman
 app.use(Express.json());
 app.use(Express.urlencoded({ extended: true }));
-
 
 
 //configuracion de HBS
@@ -121,11 +114,12 @@ app.set("views", __dirname + "/views/");
 app.set("view engine", "handlebars");
 
 
-
 //Configuracion para utilizar carpeta public
 app.use(Express.static(__dirname + "/public"));
 
 
+//Midleware de Logger
+app.use(addLogger);
 
 //Declaraciones Router
 app.use("/api/sessions", sessionRoutes)
@@ -135,11 +129,26 @@ app.use("/api/messages", messagesRoutes);
 app.use("/api/email", emailRoutes);
 
 
-
 //Faker 
-
 import { mockingProducts } from "./controllers/mockingProducts.controller.js";
+import { addLogger } from "./config/logger.js";
 
 app.use("/api/mockingproducts", mockingProducts);
+
+
+//Logger 
+
+app.use("/loggertest", (request, response) => {
+
+  request.logger.error("Prueba de log level error!");
+  request.logger.warn("Prueba de log level warning!");
+  request.logger.info("Prueba de log level info!");
+  request.logger.http("Prueba de log level http!");
+  request.logger.debug("Prueba de log level debug!");
+
+  response.send("Test de logger!");
+});
+
+
 
 

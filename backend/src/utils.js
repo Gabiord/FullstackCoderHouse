@@ -62,7 +62,7 @@ export const generateProduct = () => {
     return{
         product_name: faker.commerce.productName(),
         product_description: faker.commerce.productDescription(),
-        product_price: faker.commerce.price({ min: 100, max: 200, dec: 0 }), // Ver porque devuelve NaN
+        product_price: faker.commerce.price({ min: 100, max: 200, dec: 0 }), // Ver porque devuelve Na
         product_category: faker.commerce.productAdjective() ,
         product_code: faker.random.numeric(10),
         product_thumbnail: faker.image.image(),
