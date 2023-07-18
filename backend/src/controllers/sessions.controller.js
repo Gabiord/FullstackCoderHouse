@@ -1,9 +1,10 @@
-import { generateJWToken, isValidPassword, createHash } from "../utils.js";
+import { generateJWToken, isValidPassword, createHash, passportCall } from "../utils.js";
 import { buscarenBD, crearNuevoUsuario } from "../services/db/sessions.service.js";
 import cartService from "../services/db/cart.service.js"
 import userDTO from "../services/dto/user.dto.js";
 import { LocalStorage } from 'node-localstorage';
 import { json } from "express";
+import { sendEmailRecoverPassword } from "./email.controller.js";
 
 const CartService = new cartService()
 const localStorage = new LocalStorage('./tokens')
@@ -22,7 +23,6 @@ export function renderLoginGithub(request, response){response.render("github-log
 
 export function sessionCurrent(request, response){
     const sessionUser = request.user
-    console.log(sessionUser)
     const sessionAdmin =false
     response.status(200).json(sessionUser)
 }
@@ -43,7 +43,6 @@ export async function loginUser(request, response){
 
     try {
         const user = await buscarenBD(email)
-        console.log(user)
 
         if(!user){return response.status(400).json({message: "Credenciales Incorrectas"})}
         if(!isValidPassword(user, password)){return response.status(400).json({message: "Credenciales Incorrectas"})}
@@ -83,12 +82,44 @@ export async function saveNewUser(request,response){
     }
 }
 
+export async function sendMailToRecoverPassword(request, response){
+    try {
+        const {email} = request.body;
+        const verif = await buscarenBD(email)
+        if(!verif){return response.json({message: "el usuario no existe"})}
+        const tokenUnico=generateJWToken(email)
+
+        const datos = {
+            token: tokenUnico,
+            emailToRecover : email
+        }
+
+        await sendEmailRecoverPassword(datos)
+        
+        response.status(200).json(datos.tokenUnico)
+
+    } catch (error) {
+        response.status(400).json(error.message)
+    }
+}    
+
+export async function recoverPassword(request, response){
+    const newpass = request.body;
+    console.log(newpass)
+
+    const user = request.user;
+    console.log(user)
+
+
+
+
+}
+
 
 // PARA LOGINS CON GITHUB
 
 export async function githubLogin(request, response){
     const user = request.user;
-    console.log(user)
     try {
         const userToken= {
             name:  `${user.first_name} ${user.last_name}`,

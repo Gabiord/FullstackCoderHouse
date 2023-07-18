@@ -118,6 +118,15 @@ function SessionPage() {
               Click aqui
             </a>
           </p>
+          <p className="mt-5 text-center text-sm text-gray-500">
+            Olvidaste tu contraseña?{" "}
+            <a
+              href="http://localhost:3000/resetpassword"
+              className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
+            >
+              Click aqui
+            </a>
+          </p>
         </div>
       </div>
     </>

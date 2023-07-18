@@ -56,3 +56,36 @@ export const sendEmail = (request, response) => {
 
 };
 
+export const sendEmailRecoverPassword = (request, response) => {
+
+    const datos = request;
+
+    const mailOptions = {
+        // Cuerpo del mensaje
+        from: "Happy Shop " + config.gmailAccount,
+        to: datos.emailToRecover,
+        subject: "Recuperar contraseña",
+        html: `<div><p>Has click en el siguiente link para recuperar tu contraseña:</p></div>
+                <div><p>http://localhost:3000/resetpassword/${datos.token}</p></div>`
+                ,
+        attachments: []
+    }
+    
+    // Logica
+    try {
+        let result = transporter.sendMail(mailOptions, (error, info) => {
+            if (error) {
+                response.status(400).send({ message: "Error", payload: error })
+            }
+            console.log('Message sent: ', info.messageId);
+            response.send({ message: "Success", payload: info })
+        })
+    } catch (error) {
+        console.error(error);
+        response.status(500).send({ error: error, message: "No se pudo enviar el email desde:" + config.gmailAccount });
+    }
+
+};
+
+
+

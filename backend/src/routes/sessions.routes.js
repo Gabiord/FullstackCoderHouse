@@ -34,12 +34,15 @@ router.get("/administrador",
 )
 
 
-
 //POSTS 
 
 router.post("/login",sessionsController.loginUser);
 
 router.post("/register", sessionsController.saveNewUser);
+
+router.post("/resetpassword", sessionsController.sendMailToRecoverPassword);
+
+router.post("/resetpassword/:token", passportCall('jwtReset'), sessionsController.recoverPassword)
  
 
 // PARA LOGINS CON GITHUB

@@ -20,11 +20,9 @@ function App() {
     async function cargarUsuario(){
       if(!token){
         setCargandoUsuario(false);
-        console.log("NO TENGO TOKEN")
         return;
       }
       try {
-        console.log("TENGO TOKEN")
         const usuario = await axios.get(apiURL, {
           headers: {
             Authorization: `Bearer ${token}`

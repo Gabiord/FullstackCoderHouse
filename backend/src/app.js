@@ -9,6 +9,7 @@ import cartRoutes from "./routes/cart.routes.js";
 import messagesRoutes from "./routes/message.routes.js"
 import sessionRoutes from "./routes/sessions.routes.js"
 import emailRoutes from "./routes/email.routes.js"
+import performanceTestRoutes from "./routes/performanceTestRoutes.js"
 
 
 //Configuracion de Base de datos
@@ -127,6 +128,7 @@ app.use("/api/products", productRoutes);
 app.use("/api/carts", cartRoutes);
 app.use("/api/messages", messagesRoutes);
 app.use("/api/email", emailRoutes);
+app.use("/test", performanceTestRoutes);
 
 
 //Faker 

@@ -5,7 +5,7 @@ import jwt from 'jsonwebtoken';
 import passport from 'passport';
 import dotenv from "dotenv";
 import {faker} from "@faker-js/faker"
-import { mongoose } from 'mongoose';
+
 
 
 const __filename = fileURLToPath(import.meta.url);
@@ -24,8 +24,8 @@ export const isValidPassword = (user, password) => {
 
 
 // Implementacion de JsonWebToken
-export const generateJWToken = (user) => {
-    return jwt.sign({user}, process.env.PRIVATE_KEY, {expiresIn: "1h"});
+export const generateJWToken = (prop) => {
+    return jwt.sign({prop}, process.env.PRIVATE_KEY, {expiresIn: "1h"});
 }
 
 

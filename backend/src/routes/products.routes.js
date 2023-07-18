@@ -1,6 +1,8 @@
 import { Router } from "express";
 import * as ProductController from "../controllers/products.controller.js";
+import { passportCall, authorization} from "../utils.js";
 import cookieParser from 'cookie-parser';
+
 
 
 const router = Router();
@@ -16,13 +18,9 @@ router.get("/",
 router.get("/:id", ProductController.getProductsById)
 
 
-router.post("/savenewproduct", ProductController.saveNewProduct)
-
-
-
-
-
-
-
+router.post("/savenewproduct",
+        passportCall('jwt'),
+        authorization("premium"), 
+    ProductController.saveNewProduct)
 
 export default router;

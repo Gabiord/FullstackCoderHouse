@@ -27,6 +27,25 @@ const initializePassport = () => {
         }
     ));
 
+
+    //Estrategia de obtener Token JWT (Para reestablecer contraseña)
+    passport.use('jwtReset', new JwtStrategy(
+        {
+            jwtFromRequest: ExtractorJWT.fromUrlQueryParameter("token"),
+            secretOrKey: process.env.PRIVATE_KEY
+        },
+        async(jwt_payload, done)=>{
+            try {
+                const datos = new userDTO(jwt_payload)
+                return done(null, datos)
+            } catch (error) {
+                console.error(error);
+                return done(error);
+            }
+        }
+    ));
+
+
     //Estrategia de login con Github:
     passport.use("github",new GitHubStrategy({
         clientID: "Iv1.d0a5569b4dd681fb",
@@ -68,6 +87,8 @@ const initializePassport = () => {
             return done(error)
         }
     })
+
+
 }
 
 // funcion para extraer el header
@@ -83,9 +104,7 @@ const headerExtractor = request =>{
         token = partesEncabezado[1];
       }
     }
-    console.log(token)
     return token;
-
 }
 
 
