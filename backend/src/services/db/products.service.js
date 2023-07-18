@@ -29,6 +29,11 @@ class ProductServiceMongo {
         }
 
     }
+
+    deleteProductById = async (prop) => {
+        const result = productsModel.findByIdAndDelete(prop);
+        return result
+    }
 }
 
 export default ProductServiceMongo;

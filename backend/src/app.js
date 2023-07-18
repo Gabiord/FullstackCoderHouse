@@ -80,6 +80,23 @@ socketServer.on("connection", async(socket) => {
 
 });
 
+//Imports y config de Swagger
+import swaggerJSDOC from 'swagger-jsdoc';
+import swaggerUIExpress from 'swagger-ui-express';
+
+const swaggerOptions = {
+  definition : {
+    openapi: '3.1.0',
+    info: {
+      title: 'Documentacion Proyecto Backend',
+      description: 'Gabriela Ordoñez'    }
+  },
+  apis: [`./src/docs/**/*.yaml`]
+}
+// Creamos el specs  y declaramos swager API - ENPOINT
+const specs = swaggerJSDOC(swaggerOptions);
+
+app.use("/apidocs", swaggerUIExpress.serve, swaggerUIExpress.setup(specs))
 
 
 //Configuracion para sesiones

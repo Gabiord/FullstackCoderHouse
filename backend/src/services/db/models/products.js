@@ -39,8 +39,16 @@ const productsSchema = new mongoose.Schema({
         require: [true, 'El estado es requerido']
     },
     product_owner: {
-        type: String,
-        default: "admin",
+        type: [
+            {
+                _id: {
+                    type: mongoose.Schema.Types.ObjectId,
+                    ref: "users",
+                }
+            }
+        ],
+        default: "admin"
+
     }
 })
 

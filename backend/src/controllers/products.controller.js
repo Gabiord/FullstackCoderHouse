@@ -69,3 +69,12 @@ export async function getProductsById(request, response){
     }
 }
 
+export async function deleteProducById(request, response){
+    try {
+        let id = request.params.id;
+        const respuesta = await productService.deleteProducById(id)
+        response.status(200).json(respuesta)
+    } catch (error) {
+        response.status(400).json(error.message)
+    }
+}
