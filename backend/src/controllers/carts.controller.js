@@ -13,7 +13,6 @@ export async function finalizarCompra(request, response){
         let cartDefinitivo = []
         let cartPendiente = []
 
-
         for (const producto of cart){
             let item = producto.id
             let quantity = producto.quantity;
