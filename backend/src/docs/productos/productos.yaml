@@ -1,0 +1,69 @@
+paths:
+  /api/products:
+    get:
+      summary: Trae todos los productos en la API.
+      tags:
+        - Productos
+      responses:
+        "200":
+          description: La operacion fue exitosa!
+          content: 
+            aplication/json:
+              schema:
+                type: array
+                items: 
+                  $ref: '#components/schemas/Product'
+
+        "400":
+          description: Error en el servidor!
+        "500":
+          description: La operacion no fue exitosa!  
+
+
+components: 
+  schemas:
+    Product:          
+      type: object
+      properties: 
+        _id:
+          type: ObjectId
+          description: Id Autogestion Mongo
+        product_name:
+          type: String
+          description: Nombre del producto
+        product_description:
+          type: String
+          description: Descripcion del producto
+        product_price:
+          type: Number
+          description: Precio del producto
+        product_category:
+          type: String
+          description: Catergoria del producto
+        product_code:
+          type: String
+          description: Codigo del producto
+        product_thumbnail:
+          type: String
+          description: Imagen del producto
+        product_stock:
+          type: Number
+          description: Cantidad del producto en stock
+        product_status:
+          type: Boolean
+          description: Estado del producto
+        product_owner:
+          type: String
+          description: Dueño del producto 
+      example:
+        _id: "64484735f15e190a5595ef17"
+        product_name: Bolígrafo negro"
+        product_description: "Bolígrafo con tinta negra de alta calidad"
+        product_price: 1.99
+        product_category: "papeleria"
+        product_code: "BP1001"
+        product_thumbnail: "https://ejemplo.com/boligrafo_negro.jpg"
+        product_stock: 6
+        product_status: true
+        product_owner: "gabiord9@gmail.com"
+   

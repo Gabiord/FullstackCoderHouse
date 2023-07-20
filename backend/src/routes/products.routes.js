@@ -23,5 +23,4 @@ router.post("/deleteProduct/:id",
     passportCall('jwt'),
     ProductController.deleteProducById) 
 
-
 export default router;
