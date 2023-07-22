@@ -10,3 +10,10 @@ export async function crearNuevoUsuario(prop){
     return user
 }
 
+export async function editarContraseña(id, newPass){
+    const user = await userModel.findByIdAndUpdate(id, {password : newPass})
+    console.log("hola")
+    console.log(user)
+    return user
+}
+

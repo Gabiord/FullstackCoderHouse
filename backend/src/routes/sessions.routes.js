@@ -42,7 +42,7 @@ router.post("/register", sessionsController.saveNewUser);
 
 router.post("/resetpassword", sessionsController.sendMailToRecoverPassword);
 
-router.post("/resetpassword/:token", passportCall('jwtReset'), sessionsController.recoverPassword)
+router.post("/resetpassword/:token", sessionsController.recoverPassword)
  
 
 // PARA LOGINS CON GITHUB

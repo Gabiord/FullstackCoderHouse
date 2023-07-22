@@ -1,9 +1,10 @@
 import { generateJWToken, isValidPassword, createHash, passportCall } from "../utils.js";
-import { buscarenBD, crearNuevoUsuario } from "../services/db/sessions.service.js";
+import { buscarenBD, crearNuevoUsuario, editarContraseña } from "../services/db/sessions.service.js";
 import cartService from "../services/db/cart.service.js"
 import userDTO from "../services/dto/user.dto.js";
 import { LocalStorage } from 'node-localstorage';
 import { json } from "express";
+import jwt  from "jsonwebtoken";
 import { sendEmailRecoverPassword } from "./email.controller.js";
 
 const CartService = new cartService()
@@ -104,13 +105,22 @@ export async function sendMailToRecoverPassword(request, response){
 }    
 
 export async function recoverPassword(request, response){
-    const newpass = request.body;
-    console.log(newpass)
+    const userToken = request.params.token;
+    const newPass = request.body.newPass;
+    const hashPass = createHash(newPass)
 
-    const user = request.user;
-    console.log(user)
+    try {
+        const decodedToken = jwt.verify(userToken, process.env.PRIVATE_KEY);
+        const completeUser = buscarenBD(decodedToken)
+        console.log(completeUser)
+        const user = await editarContraseña(completeUser._id, hashPass)
+        console.log(user)
 
+        response.status(200).json({message: "Contraseña cambiada"})
 
+    } catch (error) {
+        console.error(error)
+    }
 
 
 }
