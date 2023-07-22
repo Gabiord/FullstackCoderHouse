@@ -1,5 +1,5 @@
 import { generateJWToken, isValidPassword, createHash, passportCall } from "../utils.js";
-import { buscarenBD, crearNuevoUsuario, editarContraseña } from "../services/db/sessions.service.js";
+import { buscarenBD, crearNuevoUsuario, buscarUsuarioyEitarContraseña } from "../services/db/sessions.service.js";
 import cartService from "../services/db/cart.service.js"
 import userDTO from "../services/dto/user.dto.js";
 import { LocalStorage } from 'node-localstorage';
@@ -111,15 +111,12 @@ export async function recoverPassword(request, response){
 
     try {
         const decodedToken = jwt.verify(userToken, process.env.PRIVATE_KEY);
-        const completeUser = buscarenBD(decodedToken)
-        console.log(completeUser)
-        const user = await editarContraseña(completeUser._id, hashPass)
-        console.log(user)
-
+        const completeUser = await buscarenBD(decodedToken.prop)
+        const result = await buscarUsuarioyEitarContraseña(completeUser._id, hashPass)
         response.status(200).json({message: "Contraseña cambiada"})
 
     } catch (error) {
-        console.error(error)
+        response.status(400).json(error.message)
     }
 
 
