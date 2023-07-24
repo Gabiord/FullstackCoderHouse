@@ -8,8 +8,8 @@ const persistenceFactory = productService;
 export async function saveNewProduct(request,response){
     try {
         const newProduct = new productDTO(request.body)
-        const confirm = ProductService.addProduct(newProduct);
-        response.status(200).json(confirm)
+        const confirm = await persistenceFactory.addProduct(newProduct);
+        response.status(201).json(confirm)
 
     } catch (error) {
         response.status(400).json(error.message)

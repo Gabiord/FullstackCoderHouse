@@ -14,12 +14,12 @@ router.get("/:id", ProductController.getProductsById)
 
 
 router.post("/savenewproduct",
-        passportCall('jwt'),
-        authorization("premium"), 
+        // passportCall('jwt'),
+        // authorization("premium"), 
     ProductController.saveNewProduct)
  
 
-router.post("/deleteProduct/:id", 
+router.delete("/deleteProduct/:id", 
     passportCall('jwt'),
     ProductController.deleteProducById) 
 
