@@ -14,7 +14,7 @@ components:
           type: Array
           description: Array con informacion de productos cargados al carrito.
       example:
-        cart_idUsuario: 123456789,
+        cart_idUsuario: 123456789
         cart_products:
           id: 64484735f15e190a5595ef17
           quantity: 21

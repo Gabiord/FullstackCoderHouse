@@ -1,13 +1,14 @@
 import chai from "chai";
 import supertest from "supertest";
+import { generateJWToken } from "../src/utils.js";
 
 const expect = chai.expect;
 
 const requester = supertest("http://localhost:8080");
 
-describe("Testing Aplitivo Backend", ()=>{
+describe("Testing Aplitivo Backend", async ()=>{
 
-    describe("a) Testing de api/products", async()=>{
+    describe("a) Testing de api/products", async ()=>{
 
         //Test 01
         it("El endpoint POST /api/products/savenewproduct debe crear un producto correctamente", async()=>{
@@ -18,7 +19,7 @@ describe("Testing Aplitivo Backend", ()=>{
                 description:"Zapatos Azules talla 38",
                 price:2300,
                 category:"Vestimenta",
-                code:"TEST13",
+                code:"TEST22",
                 thumbnail:"URL DE IMAGEN",
                 stock:32,
                 status:true
@@ -70,11 +71,37 @@ describe("Testing Aplitivo Backend", ()=>{
 
     })
 
-    // describe("b) Testing de api/carts", ()=>{
-        
-    // })
+    describe("b) Testing de api/carts",  async () => {
 
-    describe("c) Testing de api/sessions", ()=>{
+        //Given global
+        const cartId = "6473d452d1e895e6943dd2a1";
+        const fakeUser = { id: "1234", role: "user" };
+        const jwtToken = await generateJWToken(fakeUser); 
+        const mokeCart ={
+                "cart_idUsuario": "123456789",
+                "cart_products": {
+                  "id": "64484735f15e190a5595ef17",
+                  "quantity": 21
+                }
+        }
+      
+        //Test 01
+        it("El endpoint POST /api/carts/:cid/purchase debería finalizar la compra del carrito", async function() {
+
+          // Then
+          const {_body,ok, statusCode} = await requester.post(`/api/carts/${cartId}/purchase`).set("Authorization", `Bearer ${jwtToken}`).send(mokeCart)
+          console.log(statusCode);
+          console.log(ok);
+          console.log(_body)
+
+          //Assert that
+          expect(statusCode).is.eqls(200)
+          expect(_body._id).is.eqls(cartId)
+      
+        });
+    });
+      
+    describe("c) Testing de api/sessions", async ()=>{
 
         //Given global
         const mockUser = {
@@ -100,6 +127,7 @@ describe("Testing Aplitivo Backend", ()=>{
 
         })
 
+        //Test 02
         it("El endpoint POST /api/sessions/login debe debolver un string con el token del usuario", async function() {
 
             //Given

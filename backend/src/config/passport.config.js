@@ -27,7 +27,6 @@ const initializePassport = () => {
         }
     ));
 
-
     //Estrategia de obtener Token JWT (Para reestablecer contraseña)
     passport.use('jwtReset', new JwtStrategy(
         {
@@ -44,7 +43,6 @@ const initializePassport = () => {
             }
         }
     ));
-
 
     //Estrategia de login con Github:
     passport.use("github",new GitHubStrategy({
@@ -87,8 +85,6 @@ const initializePassport = () => {
             return done(error)
         }
     })
-
-
 }
 
 // funcion para extraer el header
@@ -106,7 +102,6 @@ const headerExtractor = request =>{
     }
     return token;
 }
-
 
 export default initializePassport;
 
