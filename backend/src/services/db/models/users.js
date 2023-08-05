@@ -14,7 +14,12 @@ const userSchema = new mongoose.Schema({
         default: "user",
         enum: ["user","admin", "premium"]
     },
-    cart: {type: String, default:""}
+    cart: {type: String, default:""},
+    documents: [{
+        name: String,
+        reference: String
+    }],
+    last_connection: { type: Date }
 });
 
 
