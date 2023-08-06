@@ -38,8 +38,6 @@ router.get("/administrador",
 
 router.post("/login",sessionsController.loginUser);
 
-router.post("/register", sessionsController.saveNewUser);
-
 router.post("/resetpassword", sessionsController.sendMailToRecoverPassword);
 
 router.post("/resetpassword/:token", sessionsController.recoverPassword)

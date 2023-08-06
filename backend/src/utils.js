@@ -3,7 +3,6 @@ import { dirname } from 'path';
 import bcrypt from "bcrypt";
 import jwt from 'jsonwebtoken';
 import passport from 'passport';
-import dotenv from "dotenv";
 import {faker} from "@faker-js/faker"
 
 

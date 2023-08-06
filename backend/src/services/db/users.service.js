@@ -10,9 +10,18 @@ export async function crearNuevoUsuario(prop){
     return user
 }
 
-export async function buscarUsuarioyEitarContraseña(id, newPass){
+export async function buscarUsuarioyEditarContraseña(id, newPass){
     const user = await userModel.findByIdAndUpdate(id, {password : newPass})
     return user
+}
 
+export async function mostrarUsuarios(){
+    const users= await userModel.find();
+    return users;
+}
+
+export async function buscarUsuarioyCambiaraPremium(id){
+    const user = await userModel.findByIdAndUpdate(id, {role : "premium"})
+    return user
 }
 

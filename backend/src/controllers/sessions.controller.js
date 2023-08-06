@@ -1,13 +1,9 @@
 import { generateJWToken, isValidPassword, createHash, passportCall } from "../utils.js";
-import { buscarenBD, crearNuevoUsuario, buscarUsuarioyEitarContraseña } from "../services/db/sessions.service.js";
-import cartService from "../services/db/cart.service.js"
-import userDTO from "../services/dto/user.dto.js";
+import { buscarenBD, buscarUsuarioyEditarContraseña } from "../services/db/users.service.js";
 import { LocalStorage } from 'node-localstorage';
-import { json } from "express";
 import jwt  from "jsonwebtoken";
 import { sendEmailRecoverPassword } from "./email.controller.js";
 
-const CartService = new cartService()
 const localStorage = new LocalStorage('./tokens')
 
 //RENDERIZADO DE VISTAS
@@ -56,32 +52,6 @@ export async function loginUser(request, response){
     }
 }
 
-export async function saveNewUser(request,response){
-
-    try {
-        const {first_name, last_name, age, email, password} = request.body;
-
-        const verif = await buscarenBD(email)
-        if(verif){return response.json({message: "el email ya esta en uso"})}
-
-        const newUser = {
-            first_name,
-            last_name,
-            age,
-            email,
-            password: createHash(password)
-        }
-
-        const user = await crearNuevoUsuario(newUser)
-    
-        const cart = await CartService.createNewCart(user._id)
-        
-        response.status(200).json(user)
-
-    } catch (error) {
-        response.status(400).json(error.message)
-    }
-}
 
 export async function sendMailToRecoverPassword(request, response){
     try {
@@ -112,7 +82,7 @@ export async function recoverPassword(request, response){
     try {
         const decodedToken = jwt.verify(userToken, process.env.PRIVATE_KEY);
         const completeUser = await buscarenBD(decodedToken.prop)
-        const result = await buscarUsuarioyEitarContraseña(completeUser._id, hashPass)
+        const result = await buscarUsuarioyEditarContraseña(completeUser._id, hashPass)
         response.status(200).json({message: "Contraseña cambiada"})
 
     } catch (error) {

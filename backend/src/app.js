@@ -10,7 +10,7 @@ import messagesRoutes from "./routes/message.routes.js"
 import sessionRoutes from "./routes/sessions.routes.js"
 import emailRoutes from "./routes/email.routes.js"
 import performanceTestRoutes from "./routes/performanceTestRoutes.js"
-
+import usersRoutes from "./routes/users.routes.js"
 
 //Configuracion de Base de datos
 import MongoSingleton from "./config/mongdb-singleton.js";
@@ -140,12 +140,14 @@ app.use(Express.static(__dirname + "/public"));
 app.use(addLogger);
 
 //Declaraciones Router
+app.use("/api/users", usersRoutes)
 app.use("/api/sessions", sessionRoutes)
 app.use("/api/products", productRoutes);
 app.use("/api/carts", cartRoutes);
 app.use("/api/messages", messagesRoutes);
 app.use("/api/email", emailRoutes);
 app.use("/test", performanceTestRoutes);
+
 
 
 //Faker 
