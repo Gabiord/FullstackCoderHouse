@@ -3,8 +3,9 @@ import { dirname } from 'path';
 import bcrypt from "bcrypt";
 import jwt from 'jsonwebtoken';
 import passport from 'passport';
-import {faker} from "@faker-js/faker"
-
+import {faker} from "@faker-js/faker";
+import multer from "multer";
+import { request } from 'http';
 
 
 const __filename = fileURLToPath(import.meta.url);
@@ -69,3 +70,34 @@ export const generateProduct = () => {
         product_status: true
     }
 }
+
+//Configuracion de Multer
+
+const docDestination = (request, file, callback) => {
+    if (file.fieldname.startsWith('profile-image')){
+        callback(null, `${__dirname}/public/profiles`)
+    }
+    else if(file.fieldname.startsWith('product-image')){
+        callback(null, `${__dirname}/public/products`)
+    }
+    else{
+        callback(null, `${__dirname}/public/documents`)
+    }
+} 
+
+const storage = multer.diskStorage(
+    {
+        destination: docDestination,
+        filename: function (request, file, callback){
+            console.log(file);
+            callback(null, `${Date.now()}-${file.originalname}`)
+        }
+    }
+)
+
+export const uploader = multer({
+    storage, onError : function(error, next){
+        console.log(error);
+        next();
+    }
+})

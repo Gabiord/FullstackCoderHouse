@@ -49,3 +49,23 @@ export async function updateToPremiumUser(request, response){
         response.status(400).json(error.message)
     }
 }
+
+export async function uploadFile(request, response){
+
+    const idUser = request.params.uid
+    console.log(request.file.fieldname)
+    if (!request.file){
+        return response.status(400).send({
+            status:"error", message: "No se ha adjuntado ningun archivo"}
+        )
+    }
+    try {
+        const respuesta = buscarUsuarioyActualizarDocumentos(idUser);
+
+    } catch (error) {
+        
+    }
+    
+
+
+}
