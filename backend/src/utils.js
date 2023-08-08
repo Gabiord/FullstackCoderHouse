@@ -54,6 +54,7 @@ export const authorization = (role) => {
     }
 };
 
+
 //FAKER
 //Idioma de datos
 faker.locale = 'es';
@@ -71,25 +72,35 @@ export const generateProduct = () => {
     }
 }
 
+
 //Configuracion de Multer
 
-const docDestination = (request, file, callback) => {
+const docDestinationByFileType = (request, file, callback) => {
     if (file.fieldname.startsWith('profile-image')){
         callback(null, `${__dirname}/public/profiles`)
     }
     else if(file.fieldname.startsWith('product-image')){
         callback(null, `${__dirname}/public/products`)
     }
-    else{
-        callback(null, `${__dirname}/public/documents`)
+    else if(file.fieldname.startsWith('user-identificacion')){
+        callback(null, `${__dirname}/public/documents/identificaciones`)
     }
+    else if(file.fieldname.startsWith('comprobante-domicilio')){
+        callback(null, `${__dirname}/public/documents/comprobantes-domicilio`)
+    }
+    else if(file.fieldname.startsWith('comprobante-estado-cuenta')){
+        callback(null, `${__dirname}/public/documents/comprobantes-estado-cuenta`)
+    }
+    else {
+        callback(new Error("Tipo de archivo no válido"));
+    }
+
 } 
 
 const storage = multer.diskStorage(
     {
-        destination: docDestination,
+        destination: docDestinationByFileType,
         filename: function (request, file, callback){
-            console.log(file);
             callback(null, `${Date.now()}-${file.originalname}`)
         }
     }

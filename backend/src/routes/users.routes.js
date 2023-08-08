@@ -11,13 +11,13 @@ router.post("/register", usersController.saveNewUser);
 
 router.post("/premium/:uid", usersController.updateToPremiumUser)
 
-router.post("/:uid/documents", uploader.single('documents'), usersController.uploadFile)
+router.post("/:uid/documents", uploader.fields([
+    { name: 'user-identificacion', maxCount: 1 },
+    { name: 'comprobante-domicilio', maxCount: 1 },
+    { name: 'comprobante-estado-cuenta', maxCount: 1 }
+]), usersController.uploadFiles)
 
-router.post("/:uid/profile", uploader.single('profile-image'), usersController.uploadFile)
-
-
-
-
+router.post("/:uid/profile", uploader.single('profile-image'), usersController.uploadFiles)
 
 
 

@@ -1,4 +1,4 @@
-import { buscarenBD, crearNuevoUsuario, mostrarUsuarios, buscarUsuarioyCambiaraPremium } from "../services/db/users.service.js";
+import { buscarenBD, crearNuevoUsuario, mostrarUsuarios, buscarUsuarioyCambiaraPremium, buscarUsuarioyActualizarDocumentos} from "../services/db/users.service.js";
 import { createHash } from "../utils.js";
 import cartService from "../services/db/cart.service.js"
 
@@ -43,27 +43,31 @@ export async function updateToPremiumUser(request, response){
     const idUser = request.params.uid
     
     try {
-        const respuesta = buscarUsuarioyCambiaraPremium(idUser);
+        const respuesta = await buscarUsuarioyCambiaraPremium(idUser);
         response.status(200).json(respuesta);
     } catch (error) {
         response.status(400).json(error.message)
     }
 }
 
-export async function uploadFile(request, response){
+export async function uploadFiles(request, response){
 
     const idUser = request.params.uid
-    console.log(request.file.fieldname)
-    if (!request.file){
-        return response.status(400).send({
-            status:"error", message: "No se ha adjuntado ningun archivo"}
-        )
-    }
-    try {
-        const respuesta = buscarUsuarioyActualizarDocumentos(idUser);
+    const files = request.files;
 
-    } catch (error) {
+    console.log(files)
+
+    try {
+        if (!files){
+            return response.status(400).send({
+                status:"error", message: "No se ha adjuntado ningun archivo"}
+            )
+        }
+        const respuesta = await buscarUsuarioyActualizarDocumentos(idUser, files);
+        response.status(200).json(respuesta);
         
+    } catch (error) {
+        response.status(400).json(error.message)
     }
     
 
