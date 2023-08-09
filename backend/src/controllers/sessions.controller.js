@@ -1,5 +1,5 @@
 import { generateJWToken, isValidPassword, createHash, passportCall } from "../utils.js";
-import { buscarenBD, buscarUsuarioyEditarContraseña } from "../services/db/users.service.js";
+import { buscarenBD, buscarUsuarioyEditarContraseña, buscarUsusarioyActualizarLastConection } from "../services/db/users.service.js";
 import { LocalStorage } from 'node-localstorage';
 import jwt  from "jsonwebtoken";
 import { sendEmailRecoverPassword } from "./email.controller.js";
@@ -45,6 +45,9 @@ export async function loginUser(request, response){
         if(!isValidPassword(user, password)){return response.status(400).json({message: "Credenciales Incorrectas"})}
         
         const accessToken = generateJWToken(user)
+
+        await buscarUsusarioyActualizarLastConection(user.id)
+
         response.status(200).json(accessToken)
     
     } catch (error) {

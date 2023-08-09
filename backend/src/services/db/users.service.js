@@ -20,6 +20,11 @@ export async function mostrarUsuarios(){
     return users;
 }
 
+export async function buscarUsusarioyActualizarLastConection(id){
+  const user = await userModel.findByIdAndUpdate(id, {last_connection : Date.now()})
+  return user
+}
+
 export async function buscarUsuarioyCambiaraPremium(id){
 
     const user = await userModel.findById(id)
