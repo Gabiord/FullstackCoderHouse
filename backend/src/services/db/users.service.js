@@ -1,3 +1,4 @@
+import userDTO from "../dto/user.dto.js";
 import userModel from "./models/users.js";
 
 export async function buscarenBD(prop){

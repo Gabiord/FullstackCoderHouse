@@ -1,6 +1,8 @@
 import { buscarenBD, crearNuevoUsuario, mostrarUsuarios, buscarUsuarioyCambiaraPremium, buscarUsuarioyActualizarDocumentos} from "../services/db/users.service.js";
 import { createHash } from "../utils.js";
 import cartService from "../services/db/cart.service.js"
+import userDTO from "../services/dto/user.dto.js";
+
 
 const CartService = new cartService()
 
@@ -31,8 +33,10 @@ export async function saveNewUser(request,response){
 
 export async function getUsers(request, response){
     try {
-        const respuesta = mostrarUsuarios()
-        response.status(200).json(respuesta)
+        const respuesta = await mostrarUsuarios()
+        const usersDTO = [];
+        await respuesta.forEach(user => { const userposition = new userDTO(user); usersDTO.push(userposition)})
+        response.status(200).json(usersDTO)
     } catch (error) {
         response.status(400).json(error.message)
     }
