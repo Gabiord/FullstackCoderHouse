@@ -1,6 +1,7 @@
 import nodemailer from 'nodemailer';
 import config from '../config/config.js';
 import __dirname from '../utils.js'
+import { request } from 'express';
 
 const transporter = nodemailer.createTransport({
     service: 'gmail',
@@ -88,4 +89,32 @@ export const sendEmailRecoverPassword = (request, response) => {
 };
 
 
+export const sendEmailtoInactiveUser = (request, response) => {
+    const user = request
 
+    const mailOptions = {
+        // Cuerpo del mensaje
+        from: "Happy Shop " + config.gmailAccount,
+        to: user.email,
+        subject: "Usuario eliminado por inactividad",
+        html: ` <div><h2>Hola ${user.first_name}!</h2></div>
+                <div><h3>Hemos eliminado tu cuenta por tener dos dias de inactividad</h3></div>`,
+        attachments: []
+    }
+
+    // Logica
+    try {
+        let result = transporter.sendMail(mailOptions, (error, info) => {
+            if (error) {
+                console.log(error);
+                response.status(400).send({ message: "Error", payload: error })
+            }
+            console.log('Message sent: ', info.messageId);
+            response.send({ message: "Success", payload: info })
+        })
+    } catch (error) {
+        console.error(error);
+        response.status(500).send({ error: error, message: "No se pudo enviar el email desde:" + config.gmailAccount });
+    }
+
+}

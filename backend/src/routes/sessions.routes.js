@@ -27,7 +27,7 @@ router.get("/current",
 
 router.get("/logout", sessionsController.logoutUser);
 
-router.get("/administrador",
+router.get("/admin",
     passportCall('jwt'),
     authorization("admin"),  
     sessionsController.administrador

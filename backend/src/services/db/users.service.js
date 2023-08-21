@@ -6,6 +6,15 @@ export async function buscarenBD(prop){
     return user;
 }
 
+export async function buscarUsuario(prop){
+  const user = await userModel.findById(prop)
+  return user
+}
+
+export async function buscarUsuarioyEliminar(prop){
+  const respuesta = await userModel.findByIdAndDelete(prop)
+}
+
 export async function crearNuevoUsuario(prop){
     const user = await userModel.create(prop)
     return user
@@ -17,7 +26,7 @@ export async function buscarUsuarioyEditarContraseña(id, newPass){
 }
 
 export async function mostrarUsuarios(){
-    const users= await userModel.find();
+    const users = await userModel.find();
     return users;
 }
 
@@ -76,5 +85,15 @@ export async function buscarUsuarioyActualizarDocumentos(id, files){
     await user.save();
     
     return user
+}
+
+export async function buscarUsuariosConInactividad(cutoffDate){
+  const users = await userModel.find({ last_connection: { $lt: cutoffDate } })
+  return users
+}
+
+export async function EliminarUsuariosConInactividad(user){
+  const users = await userModel.findByIdAndRemove(user.id)
+  return users
 }
 

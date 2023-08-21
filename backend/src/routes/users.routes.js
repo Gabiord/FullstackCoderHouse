@@ -1,6 +1,6 @@
 import { Router} from "express";
+import { passportCall, authorization, uploader} from "../utils.js";
 import * as usersController from "../controllers/users.controller.js" 
-import { uploader } from "../utils.js"
 
 const router = Router();
 
@@ -19,6 +19,26 @@ router.post("/:uid/documents", uploader.fields([
 
 router.post("/:uid/profile", uploader.single('profile-image'), usersController.uploadFiles)
 
+router.delete("/delete", usersController.deleteInactiveUsers)
 
+
+
+// Vistas y Acciones con Permisos de Administrador
+
+router.get("/admin/:uid",     
+    passportCall('jwt'),
+    authorization("admin"),
+    usersController.getUser)
+
+router.put("/admin/:uid", 
+    passportCall('jwt'),
+    authorization("admin"),
+    usersController.updateToPremiumUser)
+
+router.delete("/admin/:uid", 
+    passportCall('jwt'),
+    authorization("admin"),
+    usersController.deleteUser)
 
 export default router;
+
