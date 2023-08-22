@@ -6,7 +6,7 @@ import LandingPage from "./LandingPage"
 import TrackingPage from "./TrackingPage";
 import SessionPage from "./SessionPage"
 import Chat from "./Chat"
-import Administrador from "./AdministradorProductos";
+import Administrador from "./Administrador";
 import ResetPassword from "./ResetPassword";
 import SendMailToResetPassword from "./SendMailToResetPassword";
 
@@ -23,7 +23,7 @@ function Main(children) {
                 <Route path="/tracking/:id" element={<TrackingPage />} />
                 <Route path="/session" element={<SessionPage/>} />
                 <Route path="/chat" element={<Chat children= {children}/>} />
-                <Route path="/administrador" element= {<Administrador/>} />
+                <Route path="/admin/users" element= {<Administrador/>} />
                 <Route path="/resetpassword/" element= {<SendMailToResetPassword/>} />
                 <Route path="/resetpassword/:token" element= {<ResetPassword/>} />
             </Routes>

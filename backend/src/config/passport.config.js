@@ -3,6 +3,7 @@ import userModel from "../services/db/models/users.js";
 import jwtStrategy from "passport-jwt";
 import GitHubStrategy from "passport-github2";
 import userDTO from "../services/dto/user.dto.js";
+import usersToAdminDTO from "../services/dto/usersToAdmin.dto.js"
 
 const JwtStrategy = jwtStrategy.Strategy;
 const ExtractorJWT = jwtStrategy.ExtractJwt;

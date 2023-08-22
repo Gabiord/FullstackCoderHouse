@@ -21,9 +21,11 @@ router.post("/:uid/profile", uploader.single('profile-image'), usersController.u
 
 router.delete("/delete", usersController.deleteInactiveUsers)
 
-
-
 // Vistas y Acciones con Permisos de Administrador
+router.get("/admin", 
+    passportCall('jwt'),
+    authorization("admin"),
+    usersController.getUsers)
 
 router.get("/admin/:uid",     
     passportCall('jwt'),

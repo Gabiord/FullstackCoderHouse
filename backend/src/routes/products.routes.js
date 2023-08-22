@@ -12,7 +12,6 @@ router.get("/",
 
 router.get("/:id", ProductController.getProductsById)
 
-
 router.post("/savenewproduct",
         // passportCall('jwt'),
         // authorization("premium"), 
@@ -21,6 +20,6 @@ router.post("/savenewproduct",
 
 router.delete("/deleteProduct/:id", 
     passportCall('jwt'),
-    ProductController.deleteProducById) 
+    ProductController.deleteProductById)
 
 export default router;

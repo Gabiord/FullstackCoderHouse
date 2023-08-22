@@ -5,7 +5,6 @@ import jwt from 'jsonwebtoken';
 import passport from 'passport';
 import {faker} from "@faker-js/faker";
 import multer from "multer";
-import { request } from 'http';
 
 
 const __filename = fileURLToPath(import.meta.url);

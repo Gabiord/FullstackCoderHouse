@@ -10,12 +10,13 @@ import { createHash } from "../utils.js";
 import cartService from "../services/db/cart.service.js"
 import userDTO from "../services/dto/user.dto.js";
 import { sendEmailtoInactiveUser } from "./email.controller.js";
+import usersToAdminDTO from "../services/dto/usersToAdmin.dto.js";
 
 
 const CartService = new cartService()
 
 export async function saveNewUser(request,response){
-
+    
     try {
         const {first_name, last_name, age, email, password} = request.body;
 
@@ -42,8 +43,10 @@ export async function saveNewUser(request,response){
 export async function getUsers(request, response){
     try {
         const respuesta = await mostrarUsuarios()
-        await respuesta.forEach(user => { const userposition = new userDTO(user); usersDTO.push(userposition)})
-        response.status(200).json(usersDTO)
+        const users = []
+        await respuesta.forEach(user => { const userposition = new usersToAdminDTO(user); users.push(userposition)})
+
+        response.status(200).json(users)
     } catch (error) {
         response.status(400).json(error.message)
     }
@@ -65,8 +68,6 @@ export async function uploadFiles(request, response){
 
     const idUser = request.params.uid
     const files = request.files;
-
-    console.log(files)
 
     try {
         if (!files){
@@ -109,9 +110,7 @@ export async function deleteInactiveUsers(request, response){
 }
 
 export async function getUser(request, response){
-
     const idUser = request.params.uid
-
     try {
         const respuesta = await buscarenBD(idUser)
         console.log(respuesta)
@@ -123,7 +122,6 @@ export async function getUser(request, response){
 
 export async function deleteUser(request, response){
     const idUser = request.params.uid
-
     try {
         const respuesta = await buscarUsuarioyEliminar(idUser)
         response.status(200).json(respuesta)
