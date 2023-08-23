@@ -6,7 +6,7 @@ import ProductInCart from './ProductInCart';
 
 const ItemList = (props) => {
 
-  const { lista, productos, compra } = props
+  const { lista, productos, compra, user } = props
   const { cart, totalProductos } = useCart()
   const category = useParams();
 
@@ -80,8 +80,24 @@ const ItemList = (props) => {
           })}
         </div>
       )
-  }
+      case "usersAdmin":
+        return (
+          <tr className="text-sm hover:bg-grey-lighter">
+            {user.map((use) => {
+              return (
+                <tr className="text-sm hover:bg-grey-lighter">
+                <td className="py-2 px-4 border-b border-grey-light">{use.full_name}</td>
+                <td className="py-2 px-4 border-b border-grey-light">{use.email}</td>
+                <td className="py-2 px-4 border-b border-grey-light">{use.role}</td>
+                <td className="py-2 px-4 border-b border-grey-light">{use.last_connection}</td>
+                <button className="bg-cyan-500 hover:bg-cyan-600 text-white font-semibold py-1 px-3 rounded">Cambiar a Premium</button>
+                <button className="bg-cyan-500 hover:bg-cyan-600 text-white font-semibold py-1 px-3 rounded">Eliminar</button>
+              </tr>
+              )})}
+          </tr>
 
+        )
+  }
 }
 
 

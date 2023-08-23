@@ -1,6 +1,7 @@
 import axios from "axios"
 import { useEffect, useState } from "react";
 import { getToken } from "./utils";
+import ItemList from './ItemList';
 
 const apiURL = "http://localhost:8080/api/users/admin"
 
@@ -10,6 +11,7 @@ const Administrador = () => {
 
     const [user, setUser] = useState(null)
     const [cargandoUusario, setCargandoUsuario] = useState(true);
+    const lista = "usersAdmin"
 
     useEffect(()=>{
         async function cargarUsuario(){
@@ -25,7 +27,7 @@ const Administrador = () => {
                 Authorization: `Bearer ${token}`
               }
             })
-            console.log(usuarios)
+            console.log(usuarios.data)
             setUser(usuarios.data)
             setCargandoUsuario(false)
     
@@ -51,48 +53,15 @@ const Administrador = () => {
         <table className="w-full table-auto text-sm">
           <thead>
             <tr className="text-sm leading-normal">
-              <th className="py-2 px-4 bg-grey-lightest font-bold uppercase text-sm text-grey-light border-b border-grey-light">Nombre Apellido</th>
-              <th className="py-2 px-4 bg-grey-lightest font-bold uppercase text-sm text-grey-light border-b border-grey-light">Email</th>
-              <th className="py-2 px-4 bg-grey-lightest font-bold uppercase text-sm text-grey-light border-b border-grey-light">Rol</th>
+              <th className="py-2 bg-grey-lightest uppercase text-sm text-grey-light border-b border-grey-light">Datos de usuarios</th>
             </tr>
           </thead>
+
+
           <tbody>
-            <tr className="hover:bg-grey-lighter">
-              <td className="py-2 px-4 border-b border-grey-light">Juan Pérez</td>
-              <td className="py-2 px-4 border-b border-grey-light">juan@gmail.com</td>
-              <td className="py-2 px-4 border-b border-grey-light">user</td>
-              <button className="bg-cyan-500 hover:bg-cyan-600 text-white font-semibold py-1 px-3 rounded">Cambiar a Premium</button>
-              <button className="bg-cyan-500 hover:bg-cyan-600 text-white font-semibold py-1 px-3 rounded">Eliminar</button>
-            </tr>
-            {/* Add more rows here for each pending authorization */}
-            <tr className="hover:bg-grey-lighter">
-              <td className="py-2 px-4 border-b border-grey-light"><img src="https://via.placeholder.com/40" alt="Foto Perfil" className="rounded-full h-10 w-10" /></td>
-              <td className="py-2 px-4 border-b border-grey-light">María Gómez</td>
-              <td className="py-2 px-4 border-b border-grey-light">Usuario</td>
-            </tr>
-            <tr className="hover:bg-grey-lighter">
-              <td className="py-2 px-4 border-b border-grey-light"><img src="https://via.placeholder.com/40" alt="Foto Perfil" className="rounded-full h-10 w-10" /></td>
-              <td className="py-2 px-4 border-b border-grey-light">Carlos López</td>
-              <td className="py-2 px-4 border-b border-grey-light">Usuario</td>
-            </tr>
-            <tr className="hover:bg-grey-lighter">
-              <td className="py-2 px-4 border-b border-grey-light"><img src="https://via.placeholder.com/40" alt="Foto Perfil" className="rounded-full h-10 w-10" /></td>
-              <td className="py-2 px-4 border-b border-grey-light">Laura Torres</td>
-              <td className="py-2 px-4 border-b border-grey-light">Comercio</td>
-            </tr>
-            <tr className="hover:bg-grey-lighter">
-              <td className="py-2 px-4 border-b border-grey-light"><img src="https://via.placeholder.com/40" alt="Foto Perfil" className="rounded-full h-10 w-10" /></td>
-              <td className="py-2 px-4 border-b border-grey-light">Ana Ramírez</td>
-              <td className="py-2 px-4 border-b border-grey-light">Usuario</td>
-            </tr>
+            <ItemList users={user} lista={lista} />
           </tbody>
         </table>
-        {/* Botón "Ver más" para la tabla de Autorizaciones Pendientes */}
-        <div className="text-right mt-4">
-          <button className="bg-cyan-500 hover:bg-cyan-600 text-white font-semibold py-2 px-4 rounded">
-            Ver más
-          </button>
-        </div>
       </div>
     );
     
