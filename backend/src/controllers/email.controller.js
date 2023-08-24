@@ -118,3 +118,34 @@ export const sendEmailtoInactiveUser = (request, response) => {
     }
 
 }
+
+
+export const sendEmailtoPremiumUser = (request, response) => {
+    const user = request
+
+    const mailOptions = {
+        // Cuerpo del mensaje
+        from: "Happy Shop " + config.gmailAccount,
+        to: user.email,
+        subject: "Has eliminado un producto",
+        html: ` <div><h2>Hola ${user.first_name}!</h2></div>
+                <div><h3>Has eliminado un producto</h3></div>`,
+        attachments: []
+    }
+
+    // Logica
+    try {
+        let result = transporter.sendMail(mailOptions, (error, info) => {
+            if (error) {
+                console.log(error);
+                response.status(400).send({ message: "Error", payload: error })
+            }
+            console.log('Message sent: ', info.messageId);
+            response.send({ message: "Success", payload: info })
+        })
+    } catch (error) {
+        console.error(error);
+        response.status(500).send({ error: error, message: "No se pudo enviar el email desde:" + config.gmailAccount });
+    }
+
+}

@@ -94,7 +94,6 @@ const headerExtractor = request =>{
     const encabezadoAutorizacion = request.headers.authorization;
 
     if (encabezadoAutorizacion) {
-        console.log(encabezadoAutorizacion)
       const partesEncabezado = encabezadoAutorizacion.split(" ");
       if (partesEncabezado.length === 2 && partesEncabezado[0] === 'Bearer') {
         token = partesEncabezado[1];

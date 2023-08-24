@@ -2,6 +2,7 @@ import productsModel from "../services/db/models/products.js"
 import productDTO from "../services/dto/products.dto.js";
 import { productService } from "../services/factory.js";
 import { generateProduct } from "../utils.js";
+import { sendEmailtoPremiumUser } from "./email.controller.js";
 
 const persistenceFactory = productService;
 
@@ -71,11 +72,16 @@ export async function getProductsById(request, response){
 
 export async function deleteProductById(request, response){
 
-
+    const user = request.user
+    
     try {
         let id = request.params.id;
-        const respuesta = await productService.deleteProductById(id)
-        response.status(200).json(respuesta)
+        const productoEliminado = await productService.deleteProductById(id)
+
+        if(productoEliminado.product_owner === "premium"){
+            await sendEmailtoPremiumUser(user)
+        }
+        response.status(200).json(productoEliminado)
     } catch (error) {
         response.status(400).json(error.message)
     }
