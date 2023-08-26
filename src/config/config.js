@@ -6,7 +6,7 @@ const program = new Command(); //Crea la instancia de comandos de commander.
 program
     .option('-d', 'Variable para debug', false)
     .option('--persist <mode>', 'Modo de persistencia', "mongodb")
-    .option('--mode <mode>', 'Modo de trabajo', 'development')
+    .option('--mode <mode>', 'Modo de trabajo', 'production')
 
 program.parse();
 
