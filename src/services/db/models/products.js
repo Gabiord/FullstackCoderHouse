@@ -23,6 +23,7 @@ const productsSchema = new mongoose.Schema({
     },
     product_code:{
         type: String,
+        unique: [true, 'El codigo debe ser unico'],
         require: [true, 'El codigo es requerido']
     },
     product_thumbnail:{
