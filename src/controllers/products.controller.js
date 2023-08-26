@@ -48,8 +48,8 @@ export async function getProducts(request, response){
             "sj":response.limit,
         }
 
-        respuesta.prevLink = respuesta.hasPrevPage?`http://localhost:8080/api/products?limit=${limit?limit:''}&page=${respuesta.prevPage}&query=${query?query:''}&sort=${sort?sort:''}`:'';
-        respuesta.nextLink = respuesta.hasNextPage?`http://localhost:8080/api/products?limit=${limit?limit:''}&page=${respuesta.nextPage}&query=${query?query:''}&sort=${sort?sort:''}`:'';
+        respuesta.prevLink = respuesta.hasPrevPage?`https://fullstackcoderhouse-production.up.railway.app/api/products?limit=${limit?limit:''}&page=${respuesta.prevPage}&query=${query?query:''}&sort=${sort?sort:''}`:'';
+        respuesta.nextLink = respuesta.hasNextPage?`https://fullstackcoderhouse-production.up.railway.app/api/products?limit=${limit?limit:''}&page=${respuesta.nextPage}&query=${query?query:''}&sort=${sort?sort:''}`:'';
         respuesta.isValid= !(page<=0||page>respuesta.totalPages)
 
         response.status(200).json(respuesta)
