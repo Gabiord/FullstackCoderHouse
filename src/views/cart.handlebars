@@ -1,0 +1,15 @@
+<h2>ID de Carrito: {{this._id}}</h2>
+
+<div>
+    {{#each this.cart_products}}
+    <p>ID: {{#products}}</p>
+    <p>Producto:  {{this.products.product_name}}</p> 
+    <p>Precio: {{this.products.product_price}}</p>
+    <p>Cantidad: {{this.quantity}}</p>
+    <br><br>
+    {{/each}}
+</div>
+
+<button id="btnAtras">Volver atras</button>
+
+
